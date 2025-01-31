@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 open class Feature1Controller(val service: Feature1Service) {
     @GetMapping("hi/{name}", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun helloWorld(@PathVariable("name") name: String): ResponseEntity<String> {
-        return if (name.isNotBlank()) {
-            ResponseEntity.ok(service.sayHi(name))
-        } else {
-            ResponseEntity.notFound().build()
-        }
+        return ResponseEntity.ok(service.sayHi(name))
     }
 }

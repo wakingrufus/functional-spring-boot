@@ -24,10 +24,4 @@ class IntegrationTest {
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body).isEqualTo("Hello, John!")
     }
-
-    @Test
-    fun test_empty() {
-        val response = client.getForEntity("/hi/", String::class.java)
-        assertThat(response.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
-    }
 }

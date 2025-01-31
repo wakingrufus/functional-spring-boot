@@ -22,7 +22,7 @@ open class ExampleApplication : SpringFunkApplication {
 }
 
 fun helloWorldApi(service: Feature1Service) = router {
-    GET("/test") {
+    GET("/hi/{name}") {
         ServerResponse.ok().body(service.sayHi(it.pathVariable("name")))
     }
 }
