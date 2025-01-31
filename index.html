@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/league.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style>
+        .grid-area {
+            display: grid;
+            grid-auto-flow: column;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal pre {
+            width: 100%;
+        }
+
+        .inline-image img {
+            margin: 0;
+        }
+
+        .inline-image {
+            display: inline-flex;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-timing="15">
+            <h2>Functional Spring Boot</h2>
+        </section>
+        <section data-timing="30">
+            <h1>About Me</h1>
+            <aside class="notes">
+                You can also find me on the Chicago Tech and Kotlin slacks and the CJUG discord
+            </aside>
+            <h3>John Burns</h3>
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <p>Sr. Staff Platform Engineer @ GrubHub</p>
+                    <p>CJUG/CKUG Co-Organizer</p>
+                    <p>ktlint-gradle & spring-funk Maintainer</p>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em; padding-right: 2em;">wakingrufus</span>
+                    </p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section data-timing="30">
+            <img alt="GrubHub logo" src="gh-logo.png" height="194" width="688">
+            <aside class="notes">
+                We also implement what I am about to talk about
+            </aside>
+            <ul>
+                <li>Unlimited PTO</li>
+                <li>8-14 weeks of parental leave</li>
+                <li>4.5 day work week</li>
+            </ul>
+        </section>
+        <section data-timing="15">
+            <aside class="notes">
+
+            </aside>
+            <h2>In the Beginning...</h2>
+            <h1 class="fragment">XML</h1>
+        </section>
+        <section data-timing="30">
+            <aside class="notes">
+
+            </aside>
+            <img alt="Spring XML" src="xml.png" height="372" width="628">
+        </section>
+        <section data-timing="15">
+            <aside class="notes">
+
+            </aside>
+            <h2>Spring Boot</h2>
+            <pre class="java"><code data-trim data-noescape>
+@SpringBootApplication
+@EnableWebMvc
+public class MyApplication {
+}
+@Service
+public class MyBusinessLogic {
+    public String doSomething();
+}
+@RestController
+public class MyController {
+    private final MyBusinessLogic service;
+    @Autowired
+    public MyController(MyBusinessLogic service) {
+        this.service = service;
+    }
+    @GetMapping(path = "/ping")
+    public String get() {
+        return service.doSomething();
+    }
+}
+                </code></pre>
+        </section>
+        <section data-timing="45">
+            <h2>Spring Boot: The Good</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">No XML</li>
+                <li class="fragment">Wiring lives closer to code</li>
+                <li class="fragment">Less boilerplate</li>
+            </ul>
+        </section>
+        <section data-timing="120">
+            <h2>Spring Boot: The Bad</h2>
+            <aside class="notes">
+                learning curve: annotations are not discoverable with code completion
+                annotations aren't "click-through"
+                performance: reflection
+                structure: component scan (modulith)
+            </aside>
+            <ul>
+                <li class="fragment">Learning Curve</li>
+                <li class="fragment">Performance</li>
+                <li class="fragment">Structureless</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="90">
+            <h2>Eliminate Component Scan</h2>
+            <aside class="notes">
+                decompose SpringBootApplication to turn off component scan
+                declare beans
+                this separates wiring from code in a good way
+            </aside>
+            <pre class="java"><code data-trim data-noescape>
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@EnableWebMvc
+public class MyApplication {
+    @Bean
+    MyBusinessLogic myBusinessLogic() {
+        return MyBusinessLogic();
+    }
+    @Bean
+    MyController myController(MyBusinessLogic myBusinessLogic) {
+        return MyController(myBusinessLogic);
+    }
+}
+public class MyBusinessLogic {
+    public String doSomething();
+}
+@RestController
+public class MyController {
+    private final MyBusinessLogic service;
+    public MyController(MyBusinessLogic service) {
+        this.service = service;
+    }
+    @GetMapping(path = "/ping")
+    public String get() {
+        return service.doSomething();
+    }
+}
+                </code></pre>
+        </section>
+        <section data-timing="30">
+            <h2>Remaining Issues</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Still need AutoConfiguration</li>
+                <li class="fragment">Still using Annotations</li>
+                <li class="fragment">Boilerplate</li>
+            </ul>
+        </section>
+        <section data-timing="120">
+            <h2>Spring Fu</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Fast</li>
+                <li class="fragment">All-in</li>
+                <li class="fragment">Spring pivoted to hits for graalvm</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Functional Spring</h2>
+            <aside class="notes">
+            This is all built into spring
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+val myRoutes(service: MyBusinessLogic) = router {
+    GET("/ping", service::doSomething)
+}
+val beans = beans {
+    bean&ltMyBusinessLogic>()
+    bean(::myRoutes)
+}
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@EnableWebMvc
+open class MyApplication {
+}
+class MyBusinessLogic {
+    public String doSomething();
+}
+class MyInitializer()
+  : ApplicationContextInitializer&ltGenericApplicationContext> {
+    override fun initialize(context: GenericApplicationContext) {
+        beans.initialize(context)
+    }
+}
+</code></pre>
+        </section>
+        <section data-timing="30">
+            <h2>Remaining Issues</h2>
+            <aside class="notes">
+            </aside>
+            <ul>
+                <li class="fragment">Still need AutoConfiguration</li>
+                <li class="fragment">Not extensible</li>
+                <li class="fragment">Still some boilerplate to get started</li>
+            </ul>
+        </section>
+        <section data-auto-animate data-timing="240">
+            <h2>Spring Funk</h2>
+            <aside class="notes">
+                Continuation of Spring Fu
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+open class MyApplication : SpringFunkApplication {
+    override fun dsl(): SpringDslContainer.() -> Unit = {
+        beans {
+            bean&ltMyBusinessLogic>()
+        }
+        webmvc {
+            enableWebMvc {
+                jetty()
+            }
+            routes {
+                router { service: MyBusinessLogic -> {
+                        GET("/ping", service::doSomething)
+                    }
+                }
+            }
+        }
+    }
+}
+class MyBusinessLogic {
+    public String doSomething();
+}
+</code></pre>
+        </section>
+        <section data-timing="15">
+            <h2>Resources</h2>
+            <aside class="notes">
+            </aside>
+            <p><a href="https://docs.spring.io/spring-framework/reference/languages/kotlin/bean-definition-dsl.html">Spring Docs</a></p>
+            <p><a href="https://github.com/spring-projects-experimental/spring-fu">Spring Fu</a></p>
+            <p><a href="https://github.com/wakingrufus/spring-funk">Spring Funk</a></p>
+            <p><a href="https://www.infoq.com/presentations/spring-kotlin-functional/">Sébastien Deleuze Demo</a></p>
+        </section>
+        <section data-timing="10">
+            <div class="grid-area">
+                <div style="text-align: left">
+                    <div><a href="https://github.com/wakingrufus/functional-spring-boot-lightning">https://github.com/wakingrufus/functional-spring-boot-lightning</a>
+                    </div>
+                    <p class="inline-image">
+                        <img alt="github logo" src="github-logo.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">wakingrufus</span>
+                    </p>
+                    <p class="inline-image"><img alt="fediverse logo" src="fediverse.png" height="48" width="48"/>
+                        <span style="padding-left: .5em">@wakingrufus@bigshoulders.city</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+        defaultTiming: 60,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
