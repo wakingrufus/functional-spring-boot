@@ -8,16 +8,16 @@ tasks.wrapper {
 }
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 repositories {
     mavenCentral()
 }
 dependencies {
-    // implementation("io.github.wakingrufus:spring-funk-base:0.3.0")
-    // implementation("io.github.wakingrufus:spring-funk-webmvc:0.3.0")
-    // implementation("io.github.wakingrufus:spring-funk-runtimeconfig:0.3.0")
+//    implementation("io.github.wakingrufus:spring-funk-base:0.+")
+//    implementation("io.github.wakingrufus:spring-funk-webmvc:0.+")
+//    implementation("io.github.wakingrufus:spring-funk-runtimeconfig:0.+")
     implementation("org.springframework.boot:spring-boot-starter:3.+")
     implementation("org.springframework.boot:spring-boot-starter-jetty:3.+")
     implementation("org.springframework:spring-webmvc:6.+")
@@ -28,7 +28,7 @@ dependencies {
 }
 testing {
     suites {
-        named<JvmTestSuite>("test"){
+        named<JvmTestSuite>("test") {
             useJUnitJupiter()
         }
     }
