@@ -184,15 +184,48 @@ public class MyController {
                 <li class="fragment">Boilerplate</li>
             </ul>
         </section>
-        <section data-timing="120">
+        <section data-timing="180">
             <h2>Spring Fu</h2>
             <aside class="notes">
+                some of this work was contributed to spring core
             </aside>
             <ul>
                 <li class="fragment">Fast</li>
                 <li class="fragment">All-in</li>
                 <li class="fragment">Spring pivoted to hints for graalvm</li>
             </ul>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Beans Dsl</h2>
+            <aside class="notes">
+                tests are much faster when using just an empty context
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+val beans = beans {
+    bean&ltMyBusinessLogic>()
+    bean&ltMyBusinessLogicWithInjection> {
+        MyBusinessLogicWithInjection(ref())
+    }
+    bean&ltMyBusinessLogicWithInjectionByName>("beanName") {
+        MyBusinessLogicWithInjectionByName(ref("name"))
+    }
+}
+</code></pre>
+        </section>
+        <section data-auto-animate data-timing="120">
+            <h2>Route Dsl</h2>
+            <aside class="notes">
+                much easier to unit test: no mockmvc, etc
+            </aside>
+            <pre class="kotlin"><code data-trim data-noescape>
+class MyBusinessLogic {
+    fun doSomething(request: ServerRequest): ServerResponse
+}
+val myRoutes(service: MyBusinessLogic) = router {
+    GET("/ping", service::doSomething)
+    POST("/ping", service::doSomethingElse)
+}
+</code></pre>
         </section>
         <section data-auto-animate data-timing="120">
             <h2>Functional Spring</h2>
