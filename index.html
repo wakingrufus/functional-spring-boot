@@ -244,7 +244,8 @@ val myRoutes(service: MyBusinessLogic) = router {
             <h2 data-id="header">Functional Spring</h2>
             <aside class="notes">
             This is all built into spring
-            does not need AC, but does for other parts of spring boot
+            does not need AC, but does for other parts of spring boot<br/>
+            needs spring.factories
             </aside>
             <pre class="kotlin"><code data-trim data-noescape data-id="code">
 val myRoutes(service: MyBusinessLogic) = router {
@@ -257,17 +258,16 @@ val beans = beans {
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @EnableWebMvc
-open class MyApplication {
-}
-class MyBusinessLogic {
-    public String doSomething();
-}
-class MyInitializer()
+open class MyApplication
   : ApplicationContextInitializer&ltGenericApplicationContext> {
     override fun initialize(context: GenericApplicationContext) {
         beans.initialize(context)
     }
 }
+class MyBusinessLogic {
+    public String doSomething();
+}
+
 </code></pre>
         </section>
         <section data-auto-animate data-timing="120">
