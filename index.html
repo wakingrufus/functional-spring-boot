@@ -241,12 +241,12 @@ val myRoutes(service: MyBusinessLogic) = router {
 </code></pre>
         </section>
         <section data-auto-animate data-timing="120">
-            <h2>Functional Spring</h2>
+            <h2 data-id="header">Functional Spring</h2>
             <aside class="notes">
             This is all built into spring
             does not need AC, but does for other parts of spring boot
             </aside>
-            <pre class="kotlin"><code data-trim data-noescape>
+            <pre class="kotlin"><code data-trim data-noescape data-id="code">
 val myRoutes(service: MyBusinessLogic) = router {
     GET("/ping", service::doSomething)
 }
@@ -271,12 +271,12 @@ class MyInitializer()
 </code></pre>
         </section>
         <section data-auto-animate data-timing="120">
-            <h2>Functional Spring 7.x</h2>
+            <h2 data-id="header">Functional Spring 7.x</h2>
             <aside class="notes">
                 Coming Soon: no need to write an initializer
                 does not need AC, but does for other parts of spring boot
             </aside>
-            <pre class="kotlin"><code data-trim data-noescape>
+            <pre class="kotlin"><code data-trim data-noescape data-id="code">
 val myRoutes(service: MyBusinessLogic) = router {
     GET("/ping", service::doSomething)
 }
