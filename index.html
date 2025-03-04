@@ -62,15 +62,11 @@
                 </div>
             </div>
         </section>
-        <section data-timing="30">
+        <section data-timing="90">
             <img alt="GrubHub logo" src="gh-logo.png" height="194" width="688">
             <aside class="notes">
                 We also implement what I am about to talk about
             </aside>
-            <ul>
-                <li>Unlimited PTO</li>
-                <li>8-14 weeks of parental leave</li>
-            </ul>
         </section>
         <section data-timing="15">
             <aside class="notes">
@@ -275,7 +271,7 @@ class MyInitializer()
 </code></pre>
         </section>
         <section data-auto-animate data-timing="120">
-            <h2>Functional Spring</h2>
+            <h2>Functional Spring 7.x</h2>
             <aside class="notes">
                 Coming Soon: no need to write an initializer
                 does not need AC, but does for other parts of spring boot
@@ -284,7 +280,6 @@ class MyInitializer()
 val myRoutes(service: MyBusinessLogic) = router {
     GET("/ping", service::doSomething)
 }
-
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @EnableWebMvc
@@ -294,7 +289,6 @@ open class MyApplication {
 class MyBusinessLogic {
     public String doSomething();
 }
-
 class SampleBeanRegistrar : BeanRegistrarDsl({
     registerBean&ltMyBusinessLogic>()
     registerBean(::myRoutes)
@@ -308,7 +302,6 @@ class SampleBeanRegistrar : BeanRegistrarDsl({
             <ul>
                 <li class="fragment">Still need AutoConfiguration</li>
                 <li class="fragment">Not extensible</li>
-                <li class="fragment">Still some boilerplate to get started</li>
             </ul>
         </section>
         <section data-auto-animate data-timing="240">
